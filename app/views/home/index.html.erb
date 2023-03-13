@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>Bienvenido <%= current_user.full_name %></h1>
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <%= form_tag(root_path, method: :get) do %>
+        <div class="form-group">
+          <%= label_tag :iata_code, 'Código IATA:' %>
+          <%= text_field_tag :iata_code, nil, class: 'form-control', placeholder: 'Ingresa el código IATA de la ciudad' %>
+        </div>
+        <%= submit_tag 'Consultar', class: 'btn btn-success mt-3 mb-5' %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @weather_data.present? %>
+    <div class="row">
+      <div class="col-md-2">
+        <img src="<%= @weather_data[:icon] %>" alt="Icono del clima">
+      </div>
+      <div class="col-md-10">
+        <h2><%= @weather_data[:city] %></h2>
+        <p>Temperatura: <%= @weather_data[:temperature] %> ºC</p>
+        <p>Latitud: <%= @weather_data[:latitude] %></p>
+        <p>Longitud: <%= @weather_data[:longitude] %></p>
+      </div>
+    </div>
+  <% end %>
+
+  <h2>Últimas 5 ciudades consultadas</h2>
+
+  <% if @last_cities.length > 0 %>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Ciudad</th>
+        <th>Temperatura</th>
+        <th>Longitud</th>
+        <th>Latitud</th>
+        <th>Fecha de Consulta</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @last_cities.each do |city| %>
+        <tr>
+          <td><%= city.name %></td>
+          <td><%= city.temperature %></td>
+          <td><%= city.lon %></td>
+          <td><%= city.lat %></td>
+          <td><%= city.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No se han visitado ciudades aún.</p>
+  <% end %>
+</div>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TestWeatherapi</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-success">
+  <a class="navbar-brand text-white" href="#">Test WeatherApi</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to "Inicio", root_path, class: "nav-link text-white" %>
+        </li>
+      <% end %>
+      <!-- Agrega aquí otros elementos del menú -->
+    </ul>
+    <ul class="navbar-nav">
+      <% if user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+        </li>
+      <% else %>
+        <li class="nav-item">
+          <%= link_to "Iniciar sesión", new_user_session_path, class: "btn btn-warning mr-5" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Registrarse", new_user_registration_path, class: "btn btn-warning" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <%= yield %>
+</div>
+</body>
+</html>
